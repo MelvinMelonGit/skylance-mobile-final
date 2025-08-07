@@ -1,13 +1,13 @@
-# syntax=docker/dockerfile:1
-
 FROM openjdk:17-jdk-bullseye as build
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
-# Install system dependencies
+# Install system dependencies + Node.js 18
 RUN apt-get update && apt-get install -y \
-  wget unzip git nodejs npm curl && \
+  wget unzip git curl && \
+  curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+  apt-get install -y nodejs npm && \
   apt-get clean
 
 # Download and setup Android command line tools
@@ -18,22 +18,15 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
     mv cmdline-tools tools && \
     chmod +x ${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin/sdkmanager
 
-# Accept licenses and install required SDK components
 RUN yes | sdkmanager --licenses && \
     sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-# Set working directory to app folder
 WORKDIR /app
-
-# Copy all project files
 COPY . .
 
-# Install npm dependencies
 RUN npm install
 
-# Prebuild native Android project (bare workflow)
 RUN npx expo prebuild --non-interactive --no-install
 
-# Build release APK
 WORKDIR /app/android
 RUN ./gradlew assembleRelease
