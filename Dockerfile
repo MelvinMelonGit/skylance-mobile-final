@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM openjdk:17-jdk as build
+FROM openjdk:17 as build
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
