@@ -1,0 +1,39 @@
+name: Build APK using Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    env:
+      EXPO_PUBLIC_API_URL: ${{ secrets.EXPO_PUBLIC_API_URL }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        run: docker --version
+
+      - name: Create .env file
+        run: |
+          echo "EXPO_PUBLIC_API_URL=${{ secrets.EXPO_PUBLIC_API_URL }}" > .env
+
+      - name: Build Docker image
+        run: docker build -t skylance-builder .
+
+      - name: Copy APK from Docker container
+        run: |
+          container_id=$(docker create skylance-builder)
+          docker cp $container_id:/app/android/app/build/outputs/apk/release/app-release.apk ./app-release.apk
+          docker rm $container_id
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: skylance-apk
+          path: ./app-release.apk

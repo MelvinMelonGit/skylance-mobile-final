@@ -1,4 +1,4 @@
-import 'dotenv/config';
+require('dotenv').config(); // This loads .env into process.env
 
 export default {
   expo: {
@@ -12,6 +12,7 @@ export default {
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.tallmelon.skylancemobile"
     },
     android: {
       edgeToEdgeEnabled: true,
@@ -42,7 +43,7 @@ export default {
       typedRoutes: true,
     },
     extra: {
-      apiUrl: process.env.API_URL,
+      apiUrl: process.env.EXPO_PUBLIC_API_URL,
     },
   },
 };
