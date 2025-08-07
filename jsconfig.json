@@ -1,17 +1,12 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "baseUrl": ".",             // base is project root
+    "baseUrl": ".",             // project root
     "paths": {
-      "@/*": ["app/*"]          // @ points to app/
+      "@/*": ["app/*"]          // @ resolves to app/ folder
     }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "app/(tabs)/index.jsx",
-    "app/_layout.jsx"
+    "app/**/*.js",
+    "app/**/*.jsx"
   ]
 }
