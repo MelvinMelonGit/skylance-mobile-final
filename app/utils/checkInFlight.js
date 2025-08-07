@@ -29,7 +29,7 @@ export async function checkInFlight(
             throw new Error(`Check In failed! status: ${response.status}`)
         }
 
-        const data = await response.text()
+        const data = await response.json()
         return data
     } catch (error) {
         console.error('Check In failed:', error.message)

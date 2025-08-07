@@ -28,8 +28,8 @@ export default function Index() {
             setCheckedInFlights(data.boardingPasses)
           }
           else {
-            const data = await fetchCheckedInFlights(`/api/BoardingPass/${checkedInFlightId}/boardingPass`)
-            setCheckedInFlights([...checkedInFlights, data])
+            const data2 = await fetchCheckedInFlights(`/api/BoardingPass/${checkedInFlightId}/boardingPass`)
+            setCheckedInFlights(prev => [...prev, data2])
           }
         } catch (err) {
           setError(err.message)
@@ -56,7 +56,7 @@ export default function Index() {
                   data={checkedInFlights}
                   horizontal
                   showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item, index) => item + index}
+                  keyExtractor={(item, index) => item.toString() + index}
                   renderItem={({ item, index }) => (
                     <View style={{ marginRight: index === checkedInFlights.length - 1 ? 0 : 20 }}>
                       <BoardingPass boardingPass={item}/>
