@@ -20,12 +20,23 @@ jobs:
         run: |
           echo "EXPO_PUBLIC_API_URL=${{ secrets.EXPO_PUBLIC_API_URL }}" > .env
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker image
-        run: docker build -t skylance-apk-builder .
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest .
+
+      - name: Push Docker image to registry
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest
 
       - name: Copy APK from container
         run: |
-          container_id=$(docker create skylance-apk-builder)
+          container_id=$(docker create ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest)
           docker cp $container_id:/app/android/app/build/outputs/apk/release/app-release.apk app-release.apk
           docker rm $container_id
 
