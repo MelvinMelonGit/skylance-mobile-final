@@ -28,15 +28,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest .
 
       - name: Push Docker image to registry
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest
 
       - name: Copy APK from container
         run: |
-          container_id=$(docker create ${{ secrets.DOCKER_USERNAME }}/skylance-apk-mobile:latest)
+          container_id=$(docker create ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest)
           docker cp $container_id:/app/android/app/build/outputs/apk/release/app-release.apk app-release.apk
           docker rm $container_id
 
