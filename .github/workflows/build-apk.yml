@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Docker
         run: docker --version
@@ -33,7 +33,7 @@ jobs:
           docker rm $container_id
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: skylance-apk
           path: ./app-release.apk
