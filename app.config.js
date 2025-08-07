@@ -6,7 +6,7 @@ export default {
     slug: 'skylance-mobile',
     version: '1.0.0',
     orientation: 'portrait',
-    icon: './assets/images/icon.png',
+    icon: './app/assets/images/icon.png',
     scheme: 'skylancemobile',
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
@@ -18,21 +18,21 @@ export default {
       edgeToEdgeEnabled: true,
       package: 'com.tallmelon.skylancemobile',
       adaptiveIcon: {
-        foregroundImage: './assets/images/adaptive-icon.png',
+        foregroundImage: './app/assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
       },
     },
     web: {
       bundler: 'metro',
       output: 'static',
-      favicon: './assets/images/favicon.png',
+      favicon: './app/assets/images/favicon.png',
     },
     plugins: [
       'expo-router',
       [
         'expo-splash-screen',
         {
-          image: './assets/images/splash-icon.png',
+          image: './app/assets/images/splash-icon.png',
           imageWidth: 200,
           resizeMode: 'contain',
           backgroundColor: '#ffffff',
