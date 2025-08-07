@@ -5,10 +5,10 @@ ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-to
 
 # Install system dependencies + Node.js 18
 RUN apt-get update && apt-get install -y \
-  wget unzip git curl && \
-  curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-  apt-get install -y nodejs npm && \
-  apt-get clean
+    wget unzip git curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean
 
 # Download and setup Android command line tools
 RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
