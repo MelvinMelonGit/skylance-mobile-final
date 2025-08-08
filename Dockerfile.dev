@@ -2,9 +2,10 @@ FROM node:18-bullseye
 
 # Optional: install Android SDK if you want local builds inside container
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
-ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin
 
-RUN apt-get update && apt-get install -y wget unzip git curl && \
+RUN apt-get update && apt-get install -y wget unzip git curl openjdk-17-jdk && \
     mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
     cd ${ANDROID_SDK_ROOT}/cmdline-tools && \
     wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -O tools.zip && \
