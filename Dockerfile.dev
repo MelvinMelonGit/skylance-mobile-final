@@ -1,0 +1,31 @@
+FROM node:18-bullseye
+
+# Optional: install Android SDK if you want local builds inside container
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+
+RUN apt-get update && apt-get install -y wget unzip git curl && \
+    mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    cd ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -O tools.zip && \
+    unzip tools.zip && rm tools.zip && \
+    mv cmdline-tools tools && \
+    yes | sdkmanager --licenses && \
+    sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" && \
+    apt-get clean
+
+RUN npm install -g expo-cli
+
+WORKDIR /app
+
+# Install dependencies first (cache)
+COPY package*.json ./
+RUN npm install
+
+# Copy source
+COPY . .
+
+# Expose Expo ports
+EXPOSE 19000 19001 19002
+
+CMD ["npx", "expo", "start", "--tunnel"]
