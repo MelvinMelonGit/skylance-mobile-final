@@ -1,5 +1,4 @@
 require('dotenv').config(); // This loads .env into process.env
-const withMainActivityFix = require('./plugins/withMainActivityFix');
 
 export default {
   expo: {
@@ -18,7 +17,6 @@ export default {
     android: {
       edgeToEdgeEnabled: true,
       package: 'com.tallmelon.skylancemobile',
-      usesCleartextTraffic: true,
       adaptiveIcon: {
         foregroundImage: './app/assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
@@ -40,7 +38,6 @@ export default {
           backgroundColor: '#ffffff',
         },
       ],
-      withMainActivityFix
     ],
     experiments: {
       typedRoutes: true,
