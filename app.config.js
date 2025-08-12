@@ -1,4 +1,5 @@
 require('dotenv').config(); // This loads .env into process.env
+const withMainActivityFix = require('./plugins/withMainActivityFix');
 
 export default {
   expo: {
@@ -38,6 +39,7 @@ export default {
           backgroundColor: '#ffffff',
         },
       ],
+      withMainActivityFix
     ],
     experiments: {
       typedRoutes: true,
