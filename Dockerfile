@@ -2,7 +2,8 @@
 FROM openjdk:17-jdk-bullseye as build
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
-ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+ENV JAVA_HOME=/usr/local/openjdk-17
+ENV PATH=$JAVA_HOME/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
 # Install system dependencies + Node.js 18
 RUN apt-get update && apt-get install -y \
@@ -13,12 +14,13 @@ RUN apt-get update && apt-get install -y \
 
 # Download and setup Android command line tools
 RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    cd ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -O tools.zip && \
-    unzip tools.zip && rm tools.zip && \
-    mv cmdline-tools tools && \
+    wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -O /tmp/tools.zip && \
+    unzip /tmp/tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
+    rm /tmp/tools.zip && \
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/tools && \
     chmod +x ${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin/sdkmanager
 
+# Accept licenses and install SDK packages
 RUN yes | sdkmanager --licenses && \
     sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
