@@ -18,6 +18,7 @@ export default {
     android: {
       edgeToEdgeEnabled: true,
       package: 'com.tallmelon.skylancemobile',
+      usesCleartextTraffic: true,
       adaptiveIcon: {
         foregroundImage: './app/assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
