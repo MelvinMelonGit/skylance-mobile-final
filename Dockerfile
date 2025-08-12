@@ -1,10 +1,8 @@
+# ---------- Build stage ----------
 FROM openjdk:17-jdk-bullseye as build
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
-
-ARG EXPO_PUBLIC_API_URL
-ENV EXPO_PUBLIC_API_URL=$EXPO_PUBLIC_API_URL
 
 # Install system dependencies + Node.js 18
 RUN apt-get update && apt-get install -y \
@@ -25,15 +23,22 @@ RUN yes | sdkmanager --licenses && \
     sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
 
-# Create .env so plugin/config has access
-RUN echo "EXPO_PUBLIC_API_URL=$EXPO_PUBLIC_API_URL" > .env
-
-# Run prebuild so MainActivity gets patched
+RUN npm install
 RUN npx expo prebuild --non-interactive --no-install
 
 WORKDIR /app/android
 RUN ./gradlew assembleRelease
+
+# ---------- Release stage ----------
+FROM python:3.11-alpine AS release
+
+# Copy APK to dist folder
+COPY --from=build /app/android/app/build/outputs/apk/release/app-release.apk /dist/app-release.apk
+
+WORKDIR /dist
+EXPOSE 8080
+
+# Start a simple HTTP server
+CMD ["python", "-m", "http.server", "8080"]
