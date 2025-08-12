@@ -27,13 +27,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & push APK Docker image (multi-arch)
-        run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest \
-            -f Dockerfile \
-            --build-arg EXPO_PUBLIC_API_URL=${{ secrets.EXPO_PUBLIC_API_URL }} \
-            --push .
+      # Build APK release image
+      - name: Build APK Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest -f Dockerfile .
+
+      - name: Push APK image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/skylance-apk-mobile:latest
 
       - name: Build & push Dev Docker image (multi-arch)
         run: |
