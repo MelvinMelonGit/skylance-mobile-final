@@ -18,7 +18,7 @@ export default {
       edgeToEdgeEnabled: true,
       package: 'com.tallmelon.skylancemobile',
       adaptiveIcon: {
-        foregroundImage: './app/assets/images/adaptive-icon.png',
+        foregroundImage: './app/assets/images/skylance-logo.png',
         backgroundColor: '#ffffff',
       },
     },
@@ -32,10 +32,18 @@ export default {
       [
         'expo-splash-screen',
         {
-          image: './app/assets/images/splash-icon.png',
+          image: './app/assets/images/skylance-logo.png',
           imageWidth: 200,
           resizeMode: 'contain',
           backgroundColor: '#ffffff',
+        }
+      ],
+      [
+        'expo-build-properties',
+        {
+          android: {
+            usesCleartextTraffic: true,
+          },
         },
       ],
     ],

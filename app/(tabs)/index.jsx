@@ -14,6 +14,7 @@ const DATA = [
 ]
 
 export default function Index() {
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerView}>
