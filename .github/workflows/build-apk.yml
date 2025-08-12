@@ -15,8 +15,8 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Create .env file
-        run: echo "EXPO_PUBLIC_API_URL=${{ secrets.EXPO_PUBLIC_API_URL }}" > .env
+      # - name: Create .env file
+      #   run: echo "EXPO_PUBLIC_API_URL=${{ secrets.EXPO_PUBLIC_API_URL }}" > .env
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
