@@ -1,7 +1,7 @@
 import CardView from '@/components/CardView';
 import GradientText from '@/components/GradientText';
 import { H1, H3 } from '@/components/HeadingsView';
-import LogoView from '@/components/LogoView';
+import { Image } from 'expo-image';
 import { FlatList, SectionList, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,7 +18,7 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerView}>
-        <LogoView>Skylance</LogoView>
+        <Image source={require('@/assets/images/skylance-logo-full.png')} style={{ width: 250, height: 50, marginVertical: 20 }} contentFit="contain"/>
         <GradientText style={{ fontSize: 32, fontWeight: 'bold' }}>
           <H1>Begin your adventure now!</H1>
         </GradientText>

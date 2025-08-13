@@ -1,11 +1,11 @@
 import ButtonView from '@/components/ButtonView';
 import EditTextView from '@/components/EditTextView';
 import { H1 } from '@/components/HeadingsView';
-import LogoView from '@/components/LogoView';
 import TextView from '@/components/TextView';
 import { useAuth } from '@/context/AuthContext';
 import { color } from '@/styles/color';
 import { loginUser } from '@/utils/AuthCheck';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -67,7 +67,7 @@ export default function Index() {
     <SafeAreaView style={{ flex: 1}}>
       <ScrollView
         contentContainerStyle={styles.container}>
-        <LogoView>Skylance</LogoView>
+         <Image source={require('@/assets/images/skylance-logo-full.png')} style={{ width: 250, height: 50, marginVertical: 20 }} contentFit="contain" />
         {isLoggedIn ?
           ( <Account /> )
           : (

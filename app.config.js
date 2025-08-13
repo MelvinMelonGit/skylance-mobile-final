@@ -32,8 +32,9 @@ export default {
       [
         'expo-splash-screen',
         {
-          image: './app/assets/images/skylance-logo.png',
-          imageWidth: 200,
+          image: './app/assets/images/skylance-logo-full.png',
+          imageWidth: 175,
+          imageHeight: 35,
           resizeMode: 'contain',
           backgroundColor: '#ffffff',
         }
