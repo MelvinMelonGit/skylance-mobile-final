@@ -17,7 +17,7 @@ export async function checkInFlight(
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json', 
-                // 'Session-Token': token 
+                'Session-Token': token 
             },
             body: JSON.stringify({
                 appUserId,
@@ -57,7 +57,7 @@ export async function rebookingCheckInFlight(
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json', 
-                // 'Session-Token': token 
+                'Session-Token': token 
             },
             body: JSON.stringify({
                 appUserId,

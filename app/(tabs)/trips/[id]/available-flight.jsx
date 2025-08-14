@@ -2,8 +2,7 @@ import ButtonView from '@/components/ButtonView';
 import { H3 } from '@/components/HeadingsView';
 import RebookingFlightContainer from '@/components/RebookingFlightContainer';
 import { useSelectedFlight } from '@/context/SelectedFlightContext';
-import { fetchData } from '@/utils/fetchData';
-import { fetchFlight } from '@/utils/fetchFlight';
+import { fetchFlight, fetchFlightDetail } from '@/utils/fetchFlight';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
@@ -16,13 +15,14 @@ export default function AvailableFlight() {
   
   const router = useRouter()
 
-  const { setCurrentRebookedFlight } = useSelectedFlight()
+  const { currentFlight, setCurrentRebookedFlight } = useSelectedFlight()
 
   const [flights, setFlights] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetchData(`/api/RebookingFlights`)
+    console.log(currentFlight.flightBookingDetailId)
+    fetchFlightDetail(`/api/RebookingFlights`, currentFlight.flightBookingDetailId)
       .then(setFlights)
       .catch(err => setError(err.message))
   }, [])

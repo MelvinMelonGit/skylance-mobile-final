@@ -25,7 +25,6 @@ export default function Index() {
   const { setCurrentFlight, setCurrentBooking, setCurrentFlightValidate } = useSelectedFlight()
   const { checkedInFlights } = useCheckedInFlights()
 
-
   const [flights, setFlights] = useState([])
   const [error, setError] = useState('')
 
